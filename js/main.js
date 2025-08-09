@@ -92,3 +92,13 @@ function fadeNotification(notification) {
         notification.remove();
     });
 }
+
+async function testFetch() {
+    fetch("https://api.kinopoisk.dev/v1.3/movie?page=1&limit=50&lists=top250", {
+        headers: {
+            "X-API-KEY": "B71AS27-Q9CMCW8-HXMVCB7-2K8AWZB", // Получить тут: https://kinopoiskapiunofficial.tech
+        },
+    })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+}
