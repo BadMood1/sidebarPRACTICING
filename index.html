@@ -99,10 +99,13 @@
         </nav>
 
         <section class="home">
-            <div class="text">BadMood</div>
-            <button class="testNotif">TEST</button>
-            <button class="loadMovies">Load Movies</button>
-
+            <header class="user-panel">
+                <div class="text">BadMood</div>
+                <div class="panel-wrapper">
+                    <button class="testNotif">TEST</button>
+                    <button class="loadMovies">Load TOP 250</button>
+                </div>
+            </header>
             <!-- ======= СЕКЦИЯ ФИЛЬМОВ ======= -->
             <section class="movies-section">
                 <!-- <div class="movie-card" id="535341">
@@ -185,11 +188,27 @@
                     </nav>
                 </div> -->
             </section>
-
             <!-- ======= КОНЕЦ: СЕКЦИЯ ФИЛЬМОВ ======= -->
+
+            <div class="pagination-container">
+                <nav class="pagination">
+                    <i class="back-page bxr bx-arrow-left-stroke"></i>
+                    <!-- <a href="#">1</a>
+                    <a href="#">2</a>
+                    <a href="#">3</a>
+                    <a href="#">4</a>
+                    <a href="#">...</a>
+                    <a href="#">10</a> -->
+                    <i class="next-page bxr bx-arrow-right-stroke"></i>
+                </nav>
+            </div>
         </section>
 
+        <!-- Скрипты и постоянные блоки -->
         <div class="notifications-container"></div>
-        <script src="js/main.js"></script>
+        <script type="module" src="js/renderMovies.js"></script>
+        <script type="module" src="js/description.js"></script>
+        <script type="module" src="js/pagination.js"></script>
+        <script type="module" src="js/main.js"></script>
     </body>
 </html>

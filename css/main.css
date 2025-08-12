@@ -287,6 +287,22 @@ body.dark .switch::before {
     transition: var(--tran-05);
 }
 
+.home .user-panel {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+}
+
+.home .user-panel .panel-wrapper {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+}
+
 .home .text {
     font-size: 30px;
     font-weight: 500;
@@ -368,6 +384,7 @@ body.dark .notification {
     top: 15px;
     right: 10px;
     font-weight: 600;
+    cursor: pointer;
 }
 
 /* ======= СЕКЦИЯ ФИЛЬМОВ ======= */
@@ -509,6 +526,52 @@ body.dark .notification {
     }
     .movie-card {
         flex: 1 1 100%;
-        white-space: nowrap;
     }
+}
+
+.pagination-container {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+nav.pagination {
+    display: flex;
+    box-sizing: border-box;
+    z-index: 1000;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+    gap: 1px;
+    transition: var(--tran-04);
+    padding: 50px;
+    padding-top: 30px;
+}
+
+nav.pagination i,
+nav.pagination a {
+    color: var(--text-color);
+    background-color: var(--sidebar-color);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    text-decoration: none;
+    border: 1px solid gray;
+    border-radius: 6px;
+    transition: var(--tran-02);
+}
+
+nav.pagination:hover {
+    gap: 5px;
+    transform: scale(1.1);
+}
+
+nav.pagination i:hover,
+nav.pagination a:hover {
+    transform: scale(1.1);
 }
