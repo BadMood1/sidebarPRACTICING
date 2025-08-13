@@ -1,26 +1,72 @@
 "use strict";
 
 import { moviesSection } from "./main.js";
+import { clearMovieSection, handleTop250 } from "./renderMovies.js";
 
-const paginationElTEST = document.querySelector(".pagination-container nav");
-let currentPage = 1;
+export function renderPagination(totalPages, callBackFunc, currentPage) {
+    // Удаляем старый элемент пагинации
+    const paginationOld = document.querySelector(".pagination-container");
+    if (paginationOld) paginationOld.remove();
 
-const paginationHTML = `<div class="pagination-container">
-                <nav class="pagination">
-                    <i class="back-page bxr bx-arrow-left-stroke"></i>
-                    <i class="next-page bxr bx-arrow-right-stroke"></i>
-                </nav>
-            </div>`;
+    // Создаём элемент пагинации
 
-function renderPagination() {
-    let pagination = getPagination(currentPage, 13);
+    const paginationElHTML = `<div class="pagination-container">
+                                <nav class="pagination"></nav>
+                              </div>`;
+    moviesSection.insertAdjacentHTML("afterend", paginationElHTML);
+    const paginationEl = document.querySelector(".pagination-container nav");
 
-    pagination.forEach((text) => {
-        console.log(text);
-        const renderingPageBtn = document.createElement("a");
-        renderingPageBtn.textContent = text;
-        paginationElTEST.insertAdjacentElement("beforeend", renderingPageBtn);
+    let pagination = getPagination(currentPage, totalPages);
+    console.log("Current page is", currentPage);
+
+    // LEFT stroke ---------
+    const leftStrokeHTML = `<i class="back-page bxr bx-arrow-left-stroke"></i>`;
+    paginationEl.insertAdjacentHTML("afterbegin", leftStrokeHTML);
+    console.log(paginationEl.firstChild);
+
+    paginationEl.firstChild.addEventListener("click", () => {
+        if (currentPage === 1) return;
+        callBackFunc(currentPage - 1);
     });
+    // LEFT stroke --------- END
+
+    // MAIN pages ------------------------------------
+    pagination.forEach((text, index) => {
+        const btn = document.createElement("a");
+        btn.textContent = text;
+        if (text === currentPage) btn.classList.add("current"); // Текущая страница
+        paginationEl.insertAdjacentElement("beforeend", btn);
+
+        // Обработчики
+        btn.addEventListener("click", () => {
+            // Обработка троеточий
+            if (btn.textContent === "...") {
+                if (pagination[index - 1] === 1) {
+                    clearMovieSection();
+                    callBackFunc(pagination[index + 1] - 1);
+                } else if (pagination[index + 1] === totalPages) {
+                    clearMovieSection();
+                    callBackFunc(pagination[index - 1] + 1);
+                }
+                return;
+            }
+
+            // Обработка обычной нумерации
+            if (currentPage === text) return;
+            callBackFunc(text);
+        });
+    });
+    // MAIN pages ------------------------------------ END
+
+    // RIGHT stroke ---------
+    const rightStrokeHTML = `<i class="back-page bxr bx-arrow-right-stroke"></i>`;
+    paginationEl.insertAdjacentHTML("beforeend", rightStrokeHTML);
+
+    paginationEl.lastChild.addEventListener("click", () => {
+        if (currentPage === totalPages) return;
+        callBackFunc(currentPage + 1);
+    });
+    // RIGHT stroke --------- END
 }
 
 function getPagination(currentPage = 1, totalPages = 20, delta = 2) {
@@ -50,5 +96,3 @@ function getPagination(currentPage = 1, totalPages = 20, delta = 2) {
 
     return pagination;
 }
-
-renderPagination();

@@ -41,4 +41,4 @@ const loadMoviesBtn = document.querySelector(".loadMovies");
 
 import { handleTop250 } from "./renderMovies.js";
 
-loadMoviesBtn.addEventListener("click", handleTop250);
+loadMoviesBtn.addEventListener("click", () => handleTop250(1));

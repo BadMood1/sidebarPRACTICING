@@ -57,7 +57,7 @@ body.dark {
     padding: 10px 14px;
     background: var(--sidebar-color);
     transition: var(--tran-05); /* For Dark mode */
-    z-index: 2;
+    z-index: 100;
 }
 
 /* If sidebar closed */
@@ -403,6 +403,7 @@ body.dark .notification {
     width: 100%;
     padding: 30px;
     box-sizing: border-box;
+    min-height: 200vh;
 }
 
 .movie-card {
@@ -474,6 +475,7 @@ body.dark .notification {
     color: var(--text-color);
     transition: var(--tran-02);
 }
+
 .movie-nav a:hover {
     transform: scale(1.05);
 }
@@ -497,38 +499,6 @@ body.dark .notification {
     cursor: text;
 }
 
-/* Адаптив */
-@media (max-width: 992px) {
-    .movie-card {
-        flex: 1 1 calc((100% / 2) - 10px);
-    }
-}
-
-@media (max-width: 600px) {
-    /* Сайдбар раскрывается на весь экран */
-    .sidebar.close {
-        transform: translateX(-100%);
-    }
-    .home {
-        left: 0;
-        width: calc(100%);
-    }
-    .sidebar.close ~ .home {
-        left: 0;
-        width: calc(100%);
-    }
-    .sidebar header .toggle {
-        transform: rotate(180deg) scale(1.6);
-    }
-    .sidebar.close header .toggle {
-        transform: translateX(15px) scale(2);
-        border-radius: 4px;
-    }
-    .movie-card {
-        flex: 1 1 100%;
-    }
-}
-
 .pagination-container {
     height: 100px;
     display: flex;
@@ -540,7 +510,6 @@ body.dark .notification {
 nav.pagination {
     display: flex;
     box-sizing: border-box;
-    z-index: 1000;
     flex-direction: row;
     text-align: center;
     align-items: center;
@@ -574,4 +543,54 @@ nav.pagination:hover {
 nav.pagination i:hover,
 nav.pagination a:hover {
     transform: scale(1.1);
+}
+
+nav.pagination a.current {
+    background-color: var(--primary-color);
+    color: var(--body-color);
+}
+
+body.dark nav.pagination a.current {
+    color: var(--text-color);
+}
+
+/* Адаптив */
+@media (max-width: 992px) {
+    .movie-card {
+        flex: 1 1 calc((100% / 2) - 10px);
+    }
+}
+
+@media (max-width: 600px) {
+    /* Сайдбар раскрывается на весь экран */
+    .sidebar.close {
+        transform: translateX(-100%);
+    }
+    .home {
+        left: 0;
+        width: calc(100%);
+    }
+    .sidebar.close ~ .home {
+        left: 0;
+        width: calc(100%);
+    }
+    .sidebar header .toggle {
+        transform: rotate(180deg) scale(1.6);
+    }
+    .sidebar.close header .toggle {
+        transform: translateX(15px) scale(2);
+        border-radius: 4px;
+    }
+    .movie-card {
+        flex: 1 1 100%;
+    }
+
+    /* Пагинация */
+    .pagination-container {
+        padding: 0 30px;
+    }
+    nav.pagination {
+        padding: 50px 0;
+        width: 90%;
+    }
 }

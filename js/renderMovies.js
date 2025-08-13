@@ -1,12 +1,14 @@
 import { handleDescr, handleMinimizeBtn, truncDescription } from "./description.js";
 import { moviesSection } from "./main.js";
+import { renderPagination } from "./pagination.js";
+
+let currentPage = 1;
 
 async function renderMovies(moviesJSON) {
     console.log("Loading movies...");
 
     const moviesArr = moviesJSON.items;
     const totalPages = moviesJSON.totalPages;
-    console.log(totalPages);
 
     moviesArr.forEach((data) => {
         const movieObj = {
@@ -57,6 +59,7 @@ async function renderMovies(moviesJSON) {
         movieDescrEl.addEventListener("click", () => handleDescr(movieObj));
         minimizeBtn.addEventListener("click", () => handleMinimizeBtn(movieObj));
     });
+    return totalPages;
 }
 
 function parseGenres(genres) {
@@ -69,7 +72,10 @@ function parseGenres(genres) {
     return genresStr.slice(0, genresLength).join(", ");
 }
 
-async function getTop250(page = 1) {
+export async function handleTop250(page) {
+    let currentPage = page;
+    console.log("Handling...");
+
     const response = await fetch(
         `https://kinopoiskapiunofficial.tech/api/v2.2/films/collections?type=TOP_250_MOVIES&page=${page}`,
         {
@@ -81,12 +87,16 @@ async function getTop250(page = 1) {
         }
     );
     const json = await response.json();
-    return json;
+
+    // Очищаем перед новым рендером
+    clearMovieSection();
+    // Рендер
+    const pages = await renderMovies(json);
+
+    renderPagination(pages, handleTop250, currentPage);
 }
 
-export async function handleTop250(page = 1) {
-    console.log("Handling...");
-    const json = await getTop250();
-    console.log(json);
-    renderMovies(json);
+export function clearMovieSection() {
+    moviesSection.innerHTML = "";
+    window.scrollTo(0, 0);
 }
