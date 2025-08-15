@@ -8,7 +8,6 @@ const body = document.querySelector("body"),
     modeSwitchBtn = modeSwitch.querySelector(".switch"),
     modeText = modeSwitch.querySelector(".mode-text");
 
-const testNotifBtn = document.querySelector(".testNotif");
 export const moviesSection = document.querySelector("section.movies-section");
 
 checkDarkMode();
@@ -24,10 +23,6 @@ toggle.addEventListener("click", () => {
     sidebar.classList.toggle("close");
 });
 
-import { createNotification } from "./notification.js";
-
-testNotifBtn.addEventListener("click", createNotification);
-
 //
 function checkDarkMode() {
     if (body.classList.contains("dark")) {
@@ -42,3 +37,7 @@ const loadMoviesBtn = document.querySelector(".loadMovies");
 import { handleTop250 } from "./renderMovies.js";
 
 loadMoviesBtn.addEventListener("click", () => handleTop250(1));
+
+const libraryBtn = sidebar.querySelector(".library");
+import { renderLibrary } from "./library.js";
+libraryBtn.addEventListener("click", renderLibrary);

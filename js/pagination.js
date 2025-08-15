@@ -1,7 +1,7 @@
 "use strict";
 
 import { moviesSection } from "./main.js";
-import { clearMovieSection, handleTop250 } from "./renderMovies.js";
+import { clearMovieSection } from "./renderMovies.js";
 
 export function renderPagination(totalPages, callBackFunc, currentPage) {
     // Удаляем старый элемент пагинации
@@ -17,12 +17,10 @@ export function renderPagination(totalPages, callBackFunc, currentPage) {
     const paginationEl = document.querySelector(".pagination-container nav");
 
     let pagination = getPagination(currentPage, totalPages);
-    console.log("Current page is", currentPage);
 
     // LEFT stroke ---------
     const leftStrokeHTML = `<i class="back-page bxr bx-arrow-left-stroke"></i>`;
     paginationEl.insertAdjacentHTML("afterbegin", leftStrokeHTML);
-    console.log(paginationEl.firstChild);
 
     paginationEl.firstChild.addEventListener("click", () => {
         if (currentPage === 1) return;
@@ -73,7 +71,6 @@ function getPagination(currentPage = 1, totalPages = 20, delta = 2) {
     let pagesNums = [];
     const left = currentPage - delta;
     let right = currentPage + delta;
-
     pagesNums.push(1, totalPages);
     // Случай первых страниц
     if (currentPage <= 2) right += 2;

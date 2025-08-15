@@ -316,13 +316,6 @@ body.dark .switch::before {
     width: calc(100% - 88px);
 }
 /* РЕАЛИЗАЦИЯ УВЕДОМЛЕНИЙ */
-.testNotif {
-    font-size: 24px;
-    padding: 10px;
-    border-radius: 10px;
-    background-color: var(--sidebar-color);
-    color: var(--text-color);
-}
 .notifications-container {
     display: flex;
     flex-direction: column-reverse;
@@ -345,7 +338,8 @@ body.dark .switch::before {
     background-color: var(--primary-color);
     color: var(--sidebar-color);
     width: 200px;
-    height: 90px;
+    min-height: 90px;
+    border: 1px solid var(--primary-color-light);
     border-radius: 10px;
     display: flex;
     justify-content: space-between;
@@ -409,6 +403,8 @@ body.dark .notification {
 .movie-card {
     flex: 1 1 calc((100% / 4) - 15px);
     min-width: 300px;
+    max-height: 700px;
+    max-width: 50%;
     background: var(--sidebar-color);
     border-radius: 8px;
     overflow: hidden;
@@ -425,8 +421,8 @@ body.dark .notification {
 .movie-card img {
     width: 100%;
     /* border-radius: 10px; */
-    height: 300px;
-    object-fit: cover;
+    height: 50%;
+    /* object-fit: cover; */
     display: block;
 }
 
@@ -513,7 +509,7 @@ nav.pagination {
     flex-direction: row;
     text-align: center;
     align-items: center;
-    gap: 1px;
+    gap: 3px;
     transition: var(--tran-04);
     padding: 50px;
     padding-top: 30px;
@@ -558,6 +554,7 @@ body.dark nav.pagination a.current {
 @media (max-width: 992px) {
     .movie-card {
         flex: 1 1 calc((100% / 2) - 10px);
+        max-width: 100%;
     }
 }
 
@@ -583,8 +580,13 @@ body.dark nav.pagination a.current {
     }
     .movie-card {
         flex: 1 1 100%;
+        max-width: 100%;
     }
 
+    .notification {
+        width: 150px;
+        min-height: 45px;
+    }
     /* Пагинация */
     .pagination-container {
         padding: 0 30px;

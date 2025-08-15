@@ -4,8 +4,6 @@ export function handleDescr(movieObj) {
     const movieDescrEl = movieCard.querySelector(".movie-description");
     const minimizeBtn = movieCard.querySelector(".minimize-button");
 
-    console.log(movieDescrEl.classList);
-
     // Если выделяем текст, то у нас не сбрасывается выделение
     const selection = window.getSelection();
     if (selection.toString().length > 0) return;

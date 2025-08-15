@@ -1,8 +1,11 @@
 import { handleDescr, handleMinimizeBtn, truncDescription } from "./description.js";
 import { moviesSection } from "./main.js";
 import { renderPagination } from "./pagination.js";
-
+import { throwNotification } from "./notification.js";
+import { libraryContainsID } from "./library.js";
 let currentPage = 1;
+
+export const pageMovieMap = new Map();
 
 async function renderMovies(moviesJSON) {
     console.log("Loading movies...");
@@ -20,7 +23,10 @@ async function renderMovies(moviesJSON) {
             genres: parseGenres(data.genres),
             rating: data.ratingKinopoisk,
             year: data.year,
+            isAddedToLibrary: libraryContainsID(data.kinopoiskId),
         };
+
+        pageMovieMap.set(movieObj.id, movieObj);
 
         const truncatedDescr = truncDescription(data.description);
 
@@ -29,6 +35,7 @@ async function renderMovies(moviesJSON) {
         src="${movieObj.img}"
         alt="Movie ${movieObj.id} image"
         />
+        <div class="info-wrapper">
         <div class="movie-info">
         <h3 class="movie-title">${movieObj.nameRu}</h3>
         <p class="movie-second-info">${movieObj.nameOrig}, ${movieObj.year}</p>
@@ -46,12 +53,15 @@ async function renderMovies(moviesJSON) {
         >Кинопоиск</a
         >
         </nav>
+        </div>
         
         </div>`;
 
         moviesSection.insertAdjacentHTML("beforeend", movieHTML);
 
         const movieCard = moviesSection.querySelector(`[id="${movieObj.id}"]`);
+        const addToLibraryBtn = movieCard.querySelector(".add-to-library");
+        if (movieObj.isAddedToLibrary) addToLibraryBtn.textContent = "В библиотеке";
         const movieDescrEl = movieCard.querySelector(".movie-description");
         const minimizeBtn = movieCard.querySelector(".minimize-button");
 
@@ -59,6 +69,8 @@ async function renderMovies(moviesJSON) {
         movieDescrEl.addEventListener("click", () => handleDescr(movieObj));
         minimizeBtn.addEventListener("click", () => handleMinimizeBtn(movieObj));
     });
+    console.log(pageMovieMap);
+
     return totalPages;
 }
 
@@ -92,7 +104,7 @@ export async function handleTop250(page) {
     clearMovieSection();
     // Рендер
     const pages = await renderMovies(json);
-
+    throwNotification("Уведомление", "Топ 250 кинопоиска загружен успешно!", 2500);
     renderPagination(pages, handleTop250, currentPage);
 }
 

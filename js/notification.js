@@ -12,11 +12,11 @@ NotifContainer.addEventListener("click", (event) => {
 });
 
 // Создание нового уведомления
-export function createNotification() {
+export function throwNotification(title = "Уведомление", text = "", time = 5000) {
     const notifHtml = `  <div class="notification">
                 <div class="notif-content">
-                    <span class="notif-title">Успех!</span>
-                    <p class="notif-text">${Math.random()}</p>
+                    <span class="notif-title">${title}</span>
+                    <p class="notif-text">${text}</p>
                     <span class="notif-cancel">[X]</span>
                 </div>
             </div>`;
@@ -25,7 +25,6 @@ export function createNotification() {
 
     const notifEl = NotifContainer.lastChild;
 
-    console.log(NotifContainer.children.length);
     if (NotifContainer.children.length > MAX_NOTIFICATIONS) NotifContainer.firstElementChild.remove();
 
     // Анимация появления
@@ -35,7 +34,7 @@ export function createNotification() {
 
     setTimeout(() => {
         fadeNotification(notifEl);
-    }, 5000);
+    }, time);
 }
 // Функция закрытия с анимацией
 function closeNotification(notification) {
