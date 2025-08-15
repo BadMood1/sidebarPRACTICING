@@ -46,7 +46,10 @@ export function libraryContainsID(id) {
 }
 
 export function renderLibrary() {
+    // Очистка пространства
     clearMovieSection();
+    const paginationOld = document.querySelector(".pagination-container");
+    if (paginationOld) paginationOld.remove();
 
     libraryMovies.forEach((movieObj) => {
         const truncatedDescr = truncDescription(movieObj.description);
@@ -56,7 +59,6 @@ export function renderLibrary() {
         src="${movieObj.img}"
         alt="Movie ${movieObj.id} image"
         />
-        <div class="info-wrapper">
         <div class="movie-info">
         <h3 class="movie-title">${movieObj.nameRu}</h3>
         <p class="movie-second-info">${movieObj.nameOrig}, ${movieObj.year}</p>
@@ -74,7 +76,6 @@ export function renderLibrary() {
         >Кинопоиск</a
         >
         </nav>
-        </div>
         
         </div>`;
 

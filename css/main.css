@@ -397,16 +397,28 @@ body.dark .notification {
     width: 100%;
     padding: 30px;
     box-sizing: border-box;
-    min-height: 200vh;
+    justify-content: space-between;
+    /* min-height: 200vh; */
 }
 
+.empty-library {
+    width: 100%;
+    color: var(--text-color);
+    text-align: center;
+    border: 3px solid var(--primary-color);
+    background-color: var(--sidebar-color);
+    font-size: 48px;
+    font-family: "Mozilla Text", sans-serif;
+    padding: 15vh 0;
+
+    border-radius: 10px;
+}
 .movie-card {
-    flex: 1 1 calc((100% / 4) - 15px);
-    min-width: 300px;
-    max-height: 700px;
-    max-width: 50%;
+    flex: 1 1 275px;
+    max-width: 32%;
     background: var(--sidebar-color);
     border-radius: 8px;
+    /* align-items: flex-start; */
     overflow: hidden;
     box-sizing: border-box;
     transition: transform 0.3s ease;
@@ -421,7 +433,7 @@ body.dark .notification {
 .movie-card img {
     width: 100%;
     /* border-radius: 10px; */
-    height: 50%;
+    height: 400px;
     /* object-fit: cover; */
     display: block;
 }
@@ -551,10 +563,11 @@ body.dark nav.pagination a.current {
 }
 
 /* Адаптив */
-@media (max-width: 992px) {
+@media (max-width: 1050px) {
     .movie-card {
         flex: 1 1 calc((100% / 2) - 10px);
-        max-width: 100%;
+        max-width: 49%;
+        min-width: 271px;
     }
 }
 
