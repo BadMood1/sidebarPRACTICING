@@ -397,7 +397,7 @@ body.dark .notification {
     width: 100%;
     padding: 30px;
     box-sizing: border-box;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     /* min-height: 200vh; */
 }
 
@@ -415,7 +415,7 @@ body.dark .notification {
 }
 .movie-card {
     flex: 1 1 275px;
-    max-width: 32%;
+    max-width: 33.3%;
     background: var(--sidebar-color);
     border-radius: 8px;
     /* align-items: flex-start; */
@@ -564,9 +564,12 @@ body.dark nav.pagination a.current {
 
 /* Адаптив */
 @media (max-width: 1050px) {
+    .movies-section {
+        justify-content: center;
+    }
     .movie-card {
-        flex: 1 1 calc((100% / 2) - 10px);
-        max-width: 49%;
+        flex: 1 1 calc((100% / 2) - 15px);
+        max-width: 100%;
         min-width: 271px;
     }
 }
