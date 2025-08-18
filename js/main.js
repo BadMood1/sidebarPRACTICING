@@ -3,40 +3,18 @@
 const body = document.querySelector("body"),
     sidebar = body.querySelector(".sidebar"),
     toggle = body.querySelector(".toggle"),
-    searchBtn = body.querySelector(".search-box"),
-    modeSwitch = body.querySelector(".mode"),
-    modeSwitchBtn = modeSwitch.querySelector(".switch"),
-    modeText = modeSwitch.querySelector(".mode-text");
-
-export const moviesSection = document.querySelector("section.movies-section");
-
-checkDarkMode();
-
-//
-modeSwitchBtn.addEventListener("click", () => {
-    body.classList.toggle("dark");
-
-    checkDarkMode();
-});
-
-toggle.addEventListener("click", () => {
-    sidebar.classList.toggle("close");
-});
-
-//
-function checkDarkMode() {
-    if (body.classList.contains("dark")) {
-        modeText.innerText = "Night Mode";
-    } else {
-        modeText.innerText = "Light Mode";
-    }
-}
+    searchBtn = body.querySelector(".search-box");
 
 const loadMoviesBtn = document.querySelector(".loadMovies");
 
 import { handleTop250 } from "./renderMovies.js";
+import { throwNotification } from "./notification.js";
 
-loadMoviesBtn.addEventListener("click", () => handleTop250(1));
+loadMoviesBtn.addEventListener("click", () => {
+    handleTop250(1).then(() =>
+        throwNotification("Уведомление", "Топ 250 кинопоиска загружен успешно!", 2500)
+    );
+});
 
 const libraryBtn = sidebar.querySelector(".library");
 import { renderLibrary } from "./library.js";

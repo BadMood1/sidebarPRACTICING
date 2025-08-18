@@ -1,6 +1,5 @@
-import { moviesSection } from "./main.js";
 export function handleDescr(movieObj) {
-    const movieCard = moviesSection.querySelector(`[id="${movieObj.id}"]`);
+    const movieCard = document.querySelector(`[id="${movieObj.id}"]`);
     const movieDescrEl = movieCard.querySelector(".movie-description");
     const minimizeBtn = movieCard.querySelector(".minimize-button");
 
@@ -24,7 +23,7 @@ export function truncDescription(description) {
 }
 
 export function handleMinimizeBtn(movieObj) {
-    const movieCard = moviesSection.querySelector(`[id="${movieObj.id}"]`);
+    const movieCard = document.querySelector(`[id="${movieObj.id}"]`);
     const movieDescrEl = movieCard.querySelector(".movie-description");
     const minimizeBtn = movieCard.querySelector(".minimize-button");
 

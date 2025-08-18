@@ -1,16 +1,15 @@
-import { moviesSection } from "./main.js";
-import { pageMovieMap } from "./renderMovies.js";
+import { pageMovieMap, showOnlySection } from "./renderMovies.js";
 import { handleDescr, handleMinimizeBtn, truncDescription } from "./description.js";
-import { clearMovieSection } from "./renderMovies.js";
+
+const mainPage = document.querySelector(".home");
 
 export let libraryMovies = [];
-
 if (localStorage.getItem("libraryMovies")) {
     libraryMovies = JSON.parse(decodeURIComponent(localStorage.getItem("libraryMovies")));
     console.log("Library:", libraryMovies);
 }
 
-moviesSection.addEventListener("click", (event) => {
+mainPage.addEventListener("click", (event) => {
     const addBtn = event.target.closest(".add-to-library");
     if (!addBtn) return;
     const movieCard = addBtn.closest(".movie-card");
@@ -23,6 +22,13 @@ moviesSection.addEventListener("click", (event) => {
         console.log(index);
         libraryMovies.splice(index, 1);
         addBtn.textContent = "Удалено";
+
+        // Если действие внутри библиотеки
+        const librarySection = addBtn.closest(".library-section");
+        if (librarySection) {
+            movieCard.remove();
+            isLibraryEmpty(librarySection);
+        }
 
         localStorage.setItem("libraryMovies", encodeURIComponent(JSON.stringify(libraryMovies)));
         return;
@@ -46,10 +52,14 @@ export function libraryContainsID(id) {
 }
 
 export function renderLibrary() {
-    // Очистка пространства
-    clearMovieSection();
+    showOnlySection("library-section");
+    const librarySection = document.querySelector(".library-section");
+
     const paginationOld = document.querySelector(".pagination-container");
     if (paginationOld) paginationOld.remove();
+
+    // Если библиотека пуста, то показываем это и НЕ рендерим
+    if (isLibraryEmpty(librarySection)) return;
 
     libraryMovies.forEach((movieObj) => {
         const truncatedDescr = truncDescription(movieObj.description);
@@ -79,17 +89,26 @@ export function renderLibrary() {
         
         </div>`;
 
-        moviesSection.insertAdjacentHTML("beforeend", movieHTML);
+        librarySection.insertAdjacentHTML("beforeend", movieHTML);
 
-        const movieCard = moviesSection.querySelector(`[id="${movieObj.id}"]`);
+        const movieCard = librarySection.querySelector(`[id="${movieObj.id}"]`);
         const addToLibraryBtn = movieCard.querySelector(".add-to-library");
         if (movieObj.isAddedToLibrary) addToLibraryBtn.textContent = "В библиотеке";
         const movieDescrEl = movieCard.querySelector(".movie-description");
         const minimizeBtn = movieCard.querySelector(".minimize-button");
 
-        addToLibraryBtn.addEventListener("click", () => movieCard.remove());
         // Логика описания карточек
         movieDescrEl.addEventListener("click", () => handleDescr(movieObj));
         minimizeBtn.addEventListener("click", () => handleMinimizeBtn(movieObj));
     });
+}
+
+export function isLibraryEmpty(librarySection) {
+    if (libraryMovies.length === 0 && !librarySection.hasChildNodes()) {
+        console.log(librarySection.hasChildNodes());
+        const emptyLibraryHTML = '<div class="empty-library">Библиотека пуста</div>';
+        librarySection.insertAdjacentHTML("afterbegin", emptyLibraryHTML);
+        return true;
+    }
+    return false;
 }

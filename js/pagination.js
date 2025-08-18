@@ -1,8 +1,5 @@
 "use strict";
 
-import { moviesSection } from "./main.js";
-import { clearMovieSection } from "./renderMovies.js";
-
 export function renderPagination(totalPages, callBackFunc, currentPage) {
     // Удаляем старый элемент пагинации
     const paginationOld = document.querySelector(".pagination-container");
@@ -13,6 +10,7 @@ export function renderPagination(totalPages, callBackFunc, currentPage) {
     const paginationElHTML = `<div class="pagination-container">
                                 <nav class="pagination"></nav>
                               </div>`;
+    const moviesSection = document.querySelector(".movies-section");
     moviesSection.insertAdjacentHTML("afterend", paginationElHTML);
     const paginationEl = document.querySelector(".pagination-container nav");
 
@@ -40,10 +38,8 @@ export function renderPagination(totalPages, callBackFunc, currentPage) {
             // Обработка троеточий
             if (btn.textContent === "...") {
                 if (pagination[index - 1] === 1) {
-                    clearMovieSection();
                     callBackFunc(pagination[index + 1] - 1);
                 } else if (pagination[index + 1] === totalPages) {
-                    clearMovieSection();
                     callBackFunc(pagination[index - 1] + 1);
                 }
                 return;

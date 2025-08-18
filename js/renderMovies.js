@@ -1,5 +1,4 @@
 import { handleDescr, handleMinimizeBtn, truncDescription } from "./description.js";
-import { moviesSection } from "./main.js";
 import { renderPagination } from "./pagination.js";
 import { throwNotification } from "./notification.js";
 import { libraryContainsID } from "./library.js";
@@ -55,6 +54,7 @@ async function renderMovies(moviesJSON) {
         
         </div>`;
 
+        const moviesSection = document.querySelector(".movies-section");
         moviesSection.insertAdjacentHTML("beforeend", movieHTML);
 
         const movieCard = moviesSection.querySelector(`[id="${movieObj.id}"]`);
@@ -99,14 +99,23 @@ export async function handleTop250(page) {
     const json = await response.json();
 
     // Очищаем перед новым рендером
-    clearMovieSection();
+    showOnlySection("movies-section");
     // Рендер
     const pages = await renderMovies(json);
-    throwNotification("Уведомление", "Топ 250 кинопоиска загружен успешно!", 2500);
     renderPagination(pages, handleTop250, currentPage);
 }
 
-export function clearMovieSection() {
-    moviesSection.innerHTML = "";
+export function showOnlySection(className) {
+    const section = document.createElement("section");
+    section.classList.add(className);
+
+    const main = document.querySelector(".home");
+    const mainUserPanel = main.querySelector("header.user-panel");
+
+    const oldSections = main.querySelectorAll("section");
+    oldSections.forEach((s) => s.remove());
+
+    mainUserPanel.insertAdjacentElement("afterend", section);
+
     window.scrollTo(0, 0);
 }
