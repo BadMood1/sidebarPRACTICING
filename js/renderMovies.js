@@ -19,6 +19,7 @@ async function renderMovies(moviesJSON) {
             nameOrig: data.nameOriginal,
             img: data.posterUrl,
             description: data.description,
+            truncatedDescr: truncDescription(data.description),
             genres: parseGenres(data.genres),
             rating: data.ratingKinopoisk,
             year: data.year,
@@ -27,32 +28,8 @@ async function renderMovies(moviesJSON) {
 
         pageMovieMap.set(movieObj.id, movieObj);
 
-        const truncatedDescr = truncDescription(data.description);
-
-        const movieHTML = `<div class="movie-card" id="${movieObj.id}">
-        <img
-        src="${movieObj.img}"
-        alt="Movie ${movieObj.id} image"
-        />
-        <div class="movie-info">
-        <h3 class="movie-title">${movieObj.nameRu}</h3>
-        <p class="movie-second-info">${movieObj.nameOrig}, ${movieObj.year}</p>
-        <p class="movie-description">${truncatedDescr}\n</p>
-        <span class="minimize-button"></span>
-        <p class="movie-genres">Жанры: ${movieObj.genres}</p>
-        <p class="movie-rating">Рейтинг: ${movieObj.rating}</p>
-        </div>
-        <nav class="movie-nav">
-        <a class="add-to-library">Добавить</a>
-        <a
-        href="https://www.kinopoisk.ru/film/${movieObj.id}/"
-        class="go-to-kinopoisk"
-        target="_blank"
-        >Кинопоиск</a
-        >
-        </nav>
-        
-        </div>`;
+        //
+        const movieHTML = getMovieHTML(movieObj);
 
         const moviesSection = document.querySelector(".movies-section");
         moviesSection.insertAdjacentHTML("beforeend", movieHTML);
@@ -80,6 +57,12 @@ function parseGenres(genres) {
     });
 
     return genresStr.slice(0, genresLength).join(", ");
+}
+
+function parseSecondInfoStr(movieObj) {
+    // RETURN "nameOrig, year" OR "year"
+    const { nameOrig, year } = movieObj;
+    return nameOrig ? `${nameOrig}, ${year}` : String(year);
 }
 
 export async function handleTop250(page) {
@@ -118,4 +101,33 @@ export function showOnlySection(className) {
     mainUserPanel.insertAdjacentElement("afterend", section);
 
     window.scrollTo(0, 0);
+}
+
+export function getMovieHTML(movieObj) {
+    const movieHTML = `<div class="movie-card" id="${movieObj.id}">
+        <img
+        src="${movieObj.img}"
+        alt="Movie ${movieObj.id} image"
+        />
+        <div class="movie-info">
+        <h3 class="movie-title">${movieObj.nameRu}</h3>
+        <p class="movie-second-info">${parseSecondInfoStr(movieObj)}</p>
+        <p class="movie-description">${movieObj.truncatedDescr}\n</p>
+        <span class="minimize-button"></span>
+        <p class="movie-genres">Жанры: ${movieObj.genres}</p>
+        <p class="movie-rating">Рейтинг: ${movieObj.rating}</p>
+        </div>
+        <nav class="movie-nav">
+        <a class="add-to-library">Добавить</a>
+        <a
+        href="https://www.kinopoisk.ru/film/${movieObj.id}/"
+        class="go-to-kinopoisk"
+        target="_blank"
+        >Кинопоиск</a
+        >
+        </nav>
+        
+        </div>`;
+
+    return movieHTML;
 }

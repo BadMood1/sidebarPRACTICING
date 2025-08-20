@@ -159,10 +159,10 @@ header .image-text .header-text {
 .sidebar header .toggle {
     position: absolute;
     top: 50%;
-    right: -25px;
+    right: -30px;
     transform: rotate(180deg); /* Поворот при сворачивании */
-    height: 25px;
-    width: 25px;
+    height: 30px;
+    width: 30px;
     background: var(--primary-color);
     display: flex;
     align-items: center;
@@ -173,6 +173,9 @@ header .image-text .header-text {
     transition: var(--tran-05); /* Sidebar closing */
     cursor: pointer;
 }
+.sidebar header .toggle {
+    cursor: pointer;
+}
 
 body.dark .sidebar header .toggle {
     color: var(--text-color);
@@ -180,7 +183,7 @@ body.dark .sidebar header .toggle {
 
 /* If sidebar closed */
 .sidebar.close header .toggle {
-    transform: translateX(0);
+    transform: rotate(0);
 }
 
 .sidebar .search-box {
@@ -317,15 +320,24 @@ body.dark .switch::before {
     flex-direction: column;
     text-align: center;
     align-items: center;
+    /* border: 1px solid blueviolet; */
+    padding: 10px 30px;
 }
 
 .home .user-panel .panel-wrapper {
-    margin-top: 20px;
+    margin-bottom: 20px;
     display: flex;
     flex-direction: row;
     justify-content: space-around;
     align-items: center;
     gap: 10px;
+}
+
+.home .user-panel .text {
+    display: flex;
+    margin-top: 30px;
+    font-size: 54px;
+    border-bottom: 3px solid var(--text-color);
 }
 
 .home .text {

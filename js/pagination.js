@@ -17,13 +17,15 @@ export function renderPagination(totalPages, callBackFunc, currentPage) {
     let pagination = getPagination(currentPage, totalPages);
 
     // LEFT stroke ---------
-    const leftStrokeHTML = `<i class="back-page bxr bx-arrow-left-stroke"></i>`;
-    paginationEl.insertAdjacentHTML("afterbegin", leftStrokeHTML);
+    if (currentPage !== 1) {
+        const leftStrokeHTML = `<i class="back-page bxr bx-arrow-left-stroke"></i>`;
+        paginationEl.insertAdjacentHTML("afterbegin", leftStrokeHTML);
 
-    paginationEl.firstChild.addEventListener("click", () => {
-        if (currentPage === 1) return;
-        callBackFunc(currentPage - 1);
-    });
+        paginationEl.firstChild.addEventListener("click", () => {
+            if (currentPage === 1) return;
+            callBackFunc(currentPage - 1);
+        });
+    }
     // LEFT stroke --------- END
 
     // MAIN pages ------------------------------------
@@ -53,13 +55,15 @@ export function renderPagination(totalPages, callBackFunc, currentPage) {
     // MAIN pages ------------------------------------ END
 
     // RIGHT stroke ---------
-    const rightStrokeHTML = `<i class="back-page bxr bx-arrow-right-stroke"></i>`;
-    paginationEl.insertAdjacentHTML("beforeend", rightStrokeHTML);
+    if (currentPage !== totalPages) {
+        const rightStrokeHTML = `<i class="back-page bxr bx-arrow-right-stroke"></i>`;
+        paginationEl.insertAdjacentHTML("beforeend", rightStrokeHTML);
 
-    paginationEl.lastChild.addEventListener("click", () => {
-        if (currentPage === totalPages) return;
-        callBackFunc(currentPage + 1);
-    });
+        paginationEl.lastChild.addEventListener("click", () => {
+            if (currentPage === totalPages) return;
+            callBackFunc(currentPage + 1);
+        });
+    }
     // RIGHT stroke --------- END
 }
 
