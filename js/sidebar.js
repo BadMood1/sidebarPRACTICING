@@ -2,16 +2,13 @@ const sidebar = document.querySelector("nav.sidebar"),
     body = document.body,
     sidebarToggle = document.querySelector(".sidebar .toggle"),
     modeSwitch = body.querySelector(".mode"),
-    modeText = modeSwitch.querySelector(".mode-text"),
     modeSwitchBtn = modeSwitch.querySelector(".switch"),
     blurBehind = document.querySelector(".blur");
 
-checkDarkMode();
-
+import { toggleDarkMode } from "./themeColor.js";
 // Смена темы
 modeSwitchBtn.addEventListener("click", () => {
-    body.classList.toggle("dark");
-    checkDarkMode();
+    toggleDarkMode();
 });
 
 // Убрать сайдбар
@@ -35,10 +32,3 @@ blurBehind.addEventListener("click", () => {
 });
 
 //
-function checkDarkMode() {
-    if (body.classList.contains("dark")) {
-        modeText.innerText = "Night Mode";
-    } else {
-        modeText.innerText = "Light Mode";
-    }
-}

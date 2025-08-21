@@ -12,7 +12,7 @@
         <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet" />
         <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
     </head>
-    <body class="dark">
+    <body>
         <!-- <header class="header"></header> -->
         <nav class="sidebar close">
             <header>
@@ -34,7 +34,7 @@
                 <div class="menu">
                     <li class="search-box">
                         <i class="bxr bx-search icon"></i>
-                        <input type="search" placeholder="Поиск..." />
+                        <input type="search" placeholder="Быстрый поиск..." />
                     </li>
                     <ul class="menu-links">
                         <li class="nav-link">
@@ -100,12 +100,29 @@
         </nav>
 
         <section class="home">
-            <!-- <header class="user-panel">
-                <div class="text">Main</div>
+            <header class="home-header">
+                <div class="header-text">BadMood Movies</div>
+                <form class="searchWrapper">
+                    <input type="search" class="searchMovie" placeholder="Поиск..." />
+                    <div class="controlContainer">
+                        <button class="searchFilters">
+                            <i class="bxr bx-slider-alt"></i>
+                        </button>
+                        <button class="searchSubmit">
+                            <i class="bxr bx-search"></i>
+                        </button>
+                    </div>
+                </form>
+            </header>
+            <div id="loader"></div>
+
+            <!-- <div class="user-panel">
                 <div class="panel-wrapper">
                     <button class="loadMovies">Load TOP 250</button>
+                    <button class="loadMovies">Load TOP 250</button>
                 </div>
-            </header> -->
+                <div class="textWrapper"><span class="text">Main</span></div>
+            </div> -->
 
             <!-- ======= СЕКЦИЯ ФИЛЬМОВ ======= -->
             <!-- <section class="library-section"></section> -->
@@ -200,6 +217,8 @@
         <!-- Скрипты и постоянные блоки -->
         <div class="notifications-container"></div>
         <div class="blur"></div>
+        <script type="module" src="js/loader.js"></script>
+        <script type="module" src="js/themeColor.js"></script>
         <script type="module" src="js/sidebar.js"></script>
         <script type="module" src="js/userPanel.js"></script>
         <script type="module" src="js/library.js"></script>

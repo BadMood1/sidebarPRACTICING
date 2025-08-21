@@ -1,21 +1,35 @@
+import { handleTop250 } from "./renderMovies.js";
+import { throwNotification } from "./notification.js";
+
 export function showUserPanel(type) {
     // type: 'main', 'library'
 
     // Delete OLD user panel (reRender)
-    const old = document.querySelector("header.user-panel");
+    const old = document.querySelector(".user-panel");
     if (old) old.remove();
 
-    const home = document.querySelector("section.home");
+    const header = document.querySelector(".home-header");
 
     if (type === "main") {
-        const userPanel = `<header class="user-panel">
+        const userPanel = `<div class="user-panel">
             <div class="panel-wrapper">
-                <button class="loadMovies">Load TOP 250</button>
+                <button class="loadMovies">Лучшие Фильмы 250</button>
+                <button class="randMovie">Случайный Выбор</button>
             </div>  
-            <div class="text">Главная</div>
-        </header>`;
+            <div class="textWrapper"><span class="text">Главная</span></div>
+        </div>`;
 
-        home.insertAdjacentHTML("afterbegin", userPanel);
+        header.insertAdjacentHTML("afterend", userPanel);
+
+        // Load Top 250
+
+        const loadMoviesBtn = document.querySelector(".loadMovies");
+
+        loadMoviesBtn.addEventListener("click", () => {
+            handleTop250(1).then(() =>
+                throwNotification("Уведомление", "Топ 250 кинопоиска загружен успешно!", 2500)
+            );
+        });
     }
 
     if (type === "library") {
@@ -23,10 +37,10 @@ export function showUserPanel(type) {
                 <div class="panel-wrapper">
                 
                 </div>
-                <div class="text">Библиотека</div>
+                <div class="textWrapper"><span class="text">Библиотека</span></div>
             </header>`;
 
-        home.insertAdjacentHTML("afterbegin", userPanel);
+        header.insertAdjacentHTML("afterend", userPanel);
     }
 }
 

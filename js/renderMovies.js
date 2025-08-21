@@ -2,6 +2,7 @@ import { handleDescr, handleMinimizeBtn, truncDescription } from "./description.
 import { renderPagination } from "./pagination.js";
 import { throwNotification } from "./notification.js";
 import { libraryContainsID } from "./library.js";
+import { fetchWithLoader } from "./loader.js";
 let currentPage = 1;
 
 export const pageMovieMap = new Map();
@@ -67,9 +68,8 @@ function parseSecondInfoStr(movieObj) {
 
 export async function handleTop250(page) {
     let currentPage = page;
-    console.log("Handling...");
 
-    const response = await fetch(
+    const response = await fetchWithLoader(
         `https://kinopoiskapiunofficial.tech/api/v2.2/films/collections?type=TOP_250_MOVIES&page=${page}`,
         {
             method: "GET",
@@ -88,12 +88,27 @@ export async function handleTop250(page) {
     renderPagination(pages, handleTop250, currentPage);
 }
 
+export async function handleSearch() {
+    console.log("Searching...");
+
+    const response = await fetch(
+        `https://kinopoiskapiunofficial.tech/api/v2.2/films/collections?type=TOP_250_MOVIES&page=${page}`,
+        {
+            method: "GET",
+            headers: {
+                "X-API-KEY": "e8506cf6-b39e-428c-b791-818e964966f4",
+                "Content-Type": "application/json",
+            },
+        }
+    );
+}
+
 export function showOnlySection(className) {
     const section = document.createElement("section");
     section.classList.add(className);
 
     const main = document.querySelector(".home");
-    const mainUserPanel = main.querySelector("header.user-panel");
+    const mainUserPanel = main.querySelector(".user-panel");
 
     const oldSections = main.querySelectorAll("section");
     oldSections.forEach((s) => s.remove());
